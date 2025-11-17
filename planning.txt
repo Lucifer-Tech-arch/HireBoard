@@ -1,0 +1,3 @@
+How to store clerk user's data in database
+
+So clerk will send an event / webhook ex- user.created and ingest will run an background job which is basically a function that conects to mongodb and user information and for video calling so we want to save the user info to stream as well so using ingest user will save to mongodb as well as to stream as well
