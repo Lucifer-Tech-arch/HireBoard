@@ -7,6 +7,8 @@ import cors from 'cors';
 import {serve} from 'inngest/express'
 import { inngest } from "./lib/inngest.js";
 import { functions } from "./lib/inngest.js";
+import chatRoutes from './routes/chatRoutes.js'
+import {clerkMiddleware} from '@clerk/express'
 
 const port = ENV.PORT | 3000;
 
@@ -15,8 +17,9 @@ const __dirname = path.resolve();
 //middlewares
 app.use(express.json());
 app.use(cors({origin: ENV.CLIENT_URL, credentials: true})); //creadentials - true means our server allows a client to include cookies on request
-
 app.use("/api/ingest",serve({client: inngest, functions }))
+app.use(clerkMiddleware());  //this adds auth fields to request object: req.auth()
+app.use("/api/chat",chatRoutes)
 
 app.get("/",(req,res) => {
     res.status(200).json({msg: "success from api"});
